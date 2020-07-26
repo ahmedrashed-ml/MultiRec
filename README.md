@@ -1,4 +1,4 @@
-# MultiRec-RecSys2020
+# MultiRec
 
 
 This is our implementation for the recsys 2020 paper:

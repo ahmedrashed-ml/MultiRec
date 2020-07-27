@@ -3,7 +3,7 @@
 
 This is our implementation for the recsys 2020 paper:
 
-Ahmed Rashed, Shayan Jawed, Lars Schmidt-Thieme, and Andre Hintsches. 2020. MultiRec: A Multi-Relational Approach for UniqueItem Recommendation in Auction Systems. InFourteenth ACM Conference on Recommender Systems (RecSys ’20)
+Rashed, Ahmed, et al. "MultiRec: A Multi-Relational Approach for Unique Item Recommendation in Auction Systems."14th ACM Conference on Recommender Systems (RecSys). 2020.
 
 ## Enviroment 
 	* pandas==1.0.3

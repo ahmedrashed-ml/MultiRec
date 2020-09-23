@@ -162,7 +162,6 @@ def inferenceDense(phase,featuresize,user_batch, item_batch,time_batch,idx_user,
         infer=tf.reduce_sum(InferInputMF, 1, name="inference")
         
         pl1=tf.layers.dense(inputs=InferInputMF, units=5,activation=None, kernel_initializer=tf.random_normal_initializer(stddev=0.01))
-        #pl2=tf.layers.dense(inputs=pl1, units=10,activation=tf.nn.leaky_relu, kernel_initializer=tf.random_normal_initializer(stddev=0.01))
 
         inferPrice=tf.reduce_sum(pl1, 1, name="inferencePrice")
         regularizer = tf.add(UReg*tf.nn.l2_loss(ul1mf),IReg*tf.nn.l2_loss(il1mf), name="regularizer")
@@ -187,9 +186,6 @@ def optimizationBidding(infer,mask_batch,prices_batch, regularizer, rate_batch, 
         train_op =tf.contrib.opt.AdamWOptimizer(0.00001,learning_rate=learning_rate).minimize(cost, global_step=global_step)
     return cost, train_op    
 
-def clip(x):
-    return np.clip(x, 1.0, 5.0)
-
 def GetTrainSample(DictUsers,BatchSize=256,negsamples=1):
   trainusers=np.asarray([])
   trainitems=np.asarray([])
@@ -212,9 +208,7 @@ def GetTrainSample(DictUsers,BatchSize=256,negsamples=1):
   return trainusers,trainitems,traintargets
 
 
-
-
-def svd(train,ItemData=False,UserData=False,Graph=False,lr=0.00002,ureg=0.05,ireg=0.02):
+def MultiRec(train,ItemData=False,UserData=False,Graph=False,lr=0.00002,ureg=0.05,ireg=0.02):
 
     UserFeatures=np.identity(USER_NUM)
     ItemFeatures=[]
@@ -261,8 +255,6 @@ def svd(train,ItemData=False,UserData=False,Graph=False,lr=0.00002,ureg=0.05,ire
     w_item = tf.constant(ItemFeatures,name="itemids", shape=[ItemFeatures.shape[0], ItemFeatures.shape[1]],dtype=tf.float32)#copying everything to gpu memory
     del ItemFeatures 
     
-    #user_onehotbatch=tf.one_hot(user_batch, USER_NUM)
-    #item_onehotbatch=tf.one_hot(item_batch, ITEM_NUM)
 
     infer,inferPrice, regularizer = inferenceDense(phase,shapet,user_batch, item_batch,time_batch,w_user,w_item,ureg,ireg, user_num=USER_NUM, item_num=ITEM_NUM,
                                            device=DEVICE)#these are all placeholders as well
@@ -523,5 +515,5 @@ SALEDATA=read_SalePrices()
 BIDDINGDATA=read_Bidding(dictUsers)
 ITEMDATA=get_ItemData()
 
-svd(df_train,ItemData=UseItemData,UserData=UseUserData ,Graph=UseGraphData,lr=LEARNRATE,ureg=UserReg,ireg=ItemReg)
+MultiRec(df_train,ItemData=UseItemData,UserData=UseUserData ,Graph=UseGraphData,lr=LEARNRATE,ureg=UserReg,ireg=ItemReg)
 tf.reset_default_graph()

@@ -294,7 +294,6 @@ def MultiRec(train,ItemData=False,UserData=False,Graph=False,lr=0.00002,ureg=0.0
                                                           rate_batch: ratesBids,
                                                           phase:True})
                                                    
-            pred_batch = clip(pred_batch)
             errors.append(cst)
             saleerrors.append(slcost)
             if i % samples_per_batch == 0:

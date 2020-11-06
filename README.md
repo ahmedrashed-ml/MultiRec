@@ -17,7 +17,7 @@ Rashed, Ahmed, et al. "MultiRec: A Multi-Relational Approach for Unique Item Rec
 1. Download the eBay dataset ("https://www.kaggle.com/onlineauctions/online-auctions-dataset/data#auction.csv")
 2. Place the auction.csv file under Data/ebay/
 3. Run the data preprocessing file "python DataPrep.py"
-4. To reproduce the paper results please run the following command "python MultiRec.py 42 1 1 0"
+4. To reproduce the paper results please run the following command "python MultiRec.py 5 1 1 0"
 
 ## Paper
 Preprint version : https://www.ismll.uni-hildesheim.de/pub/pdfs/Ahmed_RecSys20.pdf
